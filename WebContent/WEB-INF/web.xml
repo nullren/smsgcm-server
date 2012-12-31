@@ -78,4 +78,17 @@
     <url-pattern>/home</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>MessageServlet</servlet-name>
+    <servlet-class>
+      com.google.android.gcm.demo.server.MessageServlet
+    </servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>MessageServlet</servlet-name>
+    <url-pattern>/message</url-pattern>
+  </servlet-mapping>
+
 </web-app>
