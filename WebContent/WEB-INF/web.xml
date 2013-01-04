@@ -22,14 +22,14 @@
 
   <listener>
     <listener-class>
-      com.google.android.gcm.demo.server.ApiKeyInitializer
+      com.omgren.apps.smsgcm.server.ApiKeyInitializer
     </listener-class>
   </listener>
   
   <servlet>
     <servlet-name>RegisterServlet</servlet-name>
     <servlet-class>
-      com.google.android.gcm.demo.server.RegisterServlet
+      com.omgren.apps.smsgcm.server.RegisterServlet
     </servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
@@ -42,7 +42,7 @@
   <servlet>
     <servlet-name>UnregisterServlet</servlet-name>
     <servlet-class>
-      com.google.android.gcm.demo.server.UnregisterServlet
+      com.omgren.apps.smsgcm.server.UnregisterServlet
     </servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
@@ -55,7 +55,7 @@
   <servlet>
     <servlet-name>SendAllMessagesServlet</servlet-name>
     <servlet-class>
-      com.google.android.gcm.demo.server.SendAllMessagesServlet
+      com.omgren.apps.smsgcm.server.SendAllMessagesServlet
     </servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
@@ -68,7 +68,7 @@
   <servlet>
     <servlet-name>HomeServlet</servlet-name>
     <servlet-class>
-      com.google.android.gcm.demo.server.HomeServlet
+      com.omgren.apps.smsgcm.server.HomeServlet
     </servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
@@ -81,7 +81,7 @@
   <servlet>
     <servlet-name>MessageServlet</servlet-name>
     <servlet-class>
-      com.google.android.gcm.demo.server.MessageServlet
+      com.omgren.apps.smsgcm.server.MessageServlet
     </servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.android.gcm.demo.server;
+package com.omgren.apps.smsgcm.server;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
