@@ -14,14 +14,14 @@
   - License for the specific language governing permissions and limitations
   - under the License.
 -->
-<project name="gcm-demo-server" default="dist">
+<project name="smsgcm-server" default="dist">
 
   <property name="src" location="src"/>
   <property name="lib" location="lib"/>
   <property name="build" location="build"/>
   <property name="classes" location="${build}/classes"/>
   <property name="dist" location="dist"/>
-  <property name="war" value="${dist}/gcm-demo.war"/>
+  <property name="war" value="${dist}/smsgcm.war"/>
   <property name="web-src" value="WebContent"/>
   <property name="web-lib" value="${web-src}/WEB-INF/lib"/>
 
