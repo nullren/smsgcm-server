@@ -101,7 +101,20 @@
 
   <servlet-mapping>
     <servlet-name>SendMessageServlet</servlet-name>
-    <url-pattern>/sendmessage</url-pattern>
+    <url-pattern>/sendMessage</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>ReceiveMessageServlet</servlet-name>
+    <servlet-class>
+      com.omgren.apps.smsgcm.server.ReceiveMessageServlet
+    </servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>ReceiveMessageServlet</servlet-name>
+    <url-pattern>/receiveMessage</url-pattern>
   </servlet-mapping>
 
 </web-app>

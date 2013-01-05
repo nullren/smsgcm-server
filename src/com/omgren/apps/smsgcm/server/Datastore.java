@@ -31,8 +31,8 @@ public final class Datastore {
 
   private static final List<String> regIds = new ArrayList<String>();
   private static final List<SmsMessageDummy> msgs = new ArrayList<SmsMessageDummy>();
-  private static final Logger logger =
-      Logger.getLogger(Datastore.class.getName());
+  private static final List<SmsMessageDummy> recMsgs = new ArrayList<SmsMessageDummy>();
+  private static final Logger logger = Logger.getLogger(Datastore.class.getName());
 
   private Datastore() {
     throw new UnsupportedOperationException();
@@ -47,20 +47,12 @@ public final class Datastore {
       regIds.add(regId);
     }
   }
-
-  /**
-   * Unregisters a device.
-   */
   public static void unregister(String regId) {
     logger.info("Unregistering " + regId);
     synchronized (regIds) {
       regIds.remove(regId);
     }
   }
-
-  /**
-   * Updates the registration id of a device.
-   */
   public static void updateRegistration(String oldId, String newId) {
     logger.info("Updating " + oldId + " to " + newId);
     synchronized (regIds) {
@@ -68,18 +60,16 @@ public final class Datastore {
       regIds.add(newId);
     }
   }
-
-  /**
-   * Gets all registered devices.
-   */
   public static List<String> getDevices() {
     synchronized (regIds) {
       return new ArrayList<String>(regIds);
     }
   }
 
+  /**
+   * Store messages to be picked up by the phone and sent
+   */
   public static void queueMsg(String address, String message){
-    logger.info("Adding message to send queue to " + address);
     synchronized (msgs) {
       SmsMessageDummy m = new SmsMessageDummy();
       m.address = address;
@@ -87,9 +77,17 @@ public final class Datastore {
       msgs.add(m);
     }
   }
-
   public static List<SmsMessageDummy> getMsgs(){
-    logger.info("copying messages");
+    synchronized (msgs) {
+      return new ArrayList<SmsMessageDummy>(msgs);
+    }
+  }
+  public static void clearMsgs(){
+    synchronized (msgs) {
+      msgs.clear();
+    }
+  }
+  public static List<SmsMessageDummy> dumpMsgs(){
     synchronized (msgs) {
       List<SmsMessageDummy> ret = new ArrayList<SmsMessageDummy>(msgs);
       msgs.clear();
@@ -97,4 +95,29 @@ public final class Datastore {
     }
   }
 
+  /**
+   * Store messages received by the phone
+   */
+  public static void putRecMsg(SmsMessageDummy m){
+    synchronized (recMsgs) {
+      recMsgs.add(m);
+    }
+  }
+  public static List<SmsMessageDummy> getRecMsgs() {
+    synchronized (recMsgs) {
+      return new ArrayList<SmsMessageDummy>(recMsgs);
+    }
+  }
+  public static List<SmsMessageDummy> dumpRecMsgs() {
+    synchronized (recMsgs) {
+      List<SmsMessageDummy> ret = new ArrayList<SmsMessageDummy>(recMsgs);
+      recMsgs.clear();
+      return ret;
+    }
+  }
+  public static void clearRecMsgs() {
+    synchronized (recMsgs) {
+      recMsgs.clear();
+    }
+  }
 }
