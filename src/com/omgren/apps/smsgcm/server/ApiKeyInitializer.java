@@ -50,7 +50,7 @@ public class ApiKeyInitializer implements ServletContextListener {
    */
   protected String getKey() {
     InputStream stream = Thread.currentThread().getContextClassLoader()
-        .getResourceAsStream(PATH);
+      .getResourceAsStream(PATH);
     if (stream == null) {
       throw new IllegalStateException("Could not find file " + PATH +
           " on web resources)");
