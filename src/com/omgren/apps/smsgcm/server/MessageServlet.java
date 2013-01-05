@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.omgren.apps.smsgcm.common.SmsMessageDummy;
+import com.google.gson.Gson;
 
 /**
  * Servlet that adds display number of devices and button to send a message.
@@ -44,7 +45,9 @@ public class MessageServlet extends BaseServlet {
     resp.setContentType("text/html");
     PrintWriter out = resp.getWriter();
 
-    out.print("[{\"name\":\"wei\",\"address\":\"+13107224896\",\"message\":\"i miss you too\"}]");
+    Datastore.queueMsg("+13107224896", "what is plan?");
+
+    out.print((new Gson()).toJson(Datastore.getMsgs()));
     resp.setStatus(HttpServletResponse.SC_OK);
   }
 

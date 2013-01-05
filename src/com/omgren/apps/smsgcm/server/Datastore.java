@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.omgren.apps.smsgcm.common.SmsMessageDummy;
+
 /**
  * Simple implementation of a data store using standard Java collections.
  * <p>
@@ -28,6 +30,7 @@ import java.util.logging.Logger;
 public final class Datastore {
 
   private static final List<String> regIds = new ArrayList<String>();
+  private static final List<SmsMessageDummy> msgs = new ArrayList<SmsMessageDummy>();
   private static final Logger logger =
       Logger.getLogger(Datastore.class.getName());
 
@@ -72,6 +75,25 @@ public final class Datastore {
   public static List<String> getDevices() {
     synchronized (regIds) {
       return new ArrayList<String>(regIds);
+    }
+  }
+
+  public static void queueMsg(String address, String message){
+    logger.info("Adding message to send queue to " + address);
+    synchronized (msgs) {
+      SmsMessageDummy m = new SmsMessageDummy();
+      m.address = address;
+      m.message = message;
+      msgs.add(m);
+    }
+  }
+
+  public static List<SmsMessageDummy> getMsgs(){
+    logger.info("copying messages");
+    synchronized (msgs) {
+      List<SmsMessageDummy> ret = new ArrayList<SmsMessageDummy>(msgs);
+      msgs.clear();
+      return ret;
     }
   }
 

@@ -88,7 +88,7 @@
 
   <servlet-mapping>
     <servlet-name>MessageServlet</servlet-name>
-    <url-pattern>/message</url-pattern>
+    <url-pattern>/messages</url-pattern>
   </servlet-mapping>
 
 </web-app>
