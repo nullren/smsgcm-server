@@ -91,4 +91,17 @@
     <url-pattern>/messages</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>SendMessageServlet</servlet-name>
+    <servlet-class>
+      com.omgren.apps.smsgcm.server.SendMessageServlet
+    </servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>SendMessageServlet</servlet-name>
+    <url-pattern>/sendmessage</url-pattern>
+  </servlet-mapping>
+
 </web-app>

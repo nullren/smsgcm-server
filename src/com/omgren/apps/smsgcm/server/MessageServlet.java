@@ -45,8 +45,6 @@ public class MessageServlet extends BaseServlet {
     resp.setContentType("text/html");
     PrintWriter out = resp.getWriter();
 
-    Datastore.queueMsg("+13107224896", "what is plan?");
-
     out.print((new Gson()).toJson(Datastore.getMsgs()));
     resp.setStatus(HttpServletResponse.SC_OK);
   }
