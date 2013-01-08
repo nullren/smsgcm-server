@@ -3,6 +3,7 @@ package com.omgren.apps.smsgcm.server;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Iterator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +28,7 @@ public class ReceiveMessageServlet extends BaseServlet {
     msg.message = req.getParameter("message");
 
     if( msg.address != null ){
-      //Datastore.putRecMsg(msg);
+      Datastore.lookupUser(req).getDevice(0).getReceived().put(msg);
       out.print("added: ");
       out.print(msg.name + " (" + msg.address + "): " + msg.message);
       out.print("<br/><br/>");
@@ -35,16 +36,16 @@ public class ReceiveMessageServlet extends BaseServlet {
 
     out.print("have:<br/>");
 
-    /*List<SmsMessageDummy> msgs = Datastore.getRecMsgs();
+    List<SmsMessageDummy> msgs = Datastore.lookupUser(req).getDevice(0).getReceived().get();
     int counter = 0;
-    for (SmsMessageDummy m : msgs) {
+    for (Iterator<SmsMessageDummy> it = msgs.iterator(); it.hasNext();) {
+      SmsMessageDummy m = it.next();
       counter++;
       out.print(m.name + " (" + m.address + "): " + m.message);
       out.print("<br />");
     }
 
     out.print("total " + counter + " messages");
-    */
 
     resp.setStatus(HttpServletResponse.SC_OK);
   }
