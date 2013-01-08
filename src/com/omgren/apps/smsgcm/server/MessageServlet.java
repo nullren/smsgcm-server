@@ -44,7 +44,7 @@ public class MessageServlet extends BaseServlet {
       throws IOException {
     resp.setContentType("text/html");
     PrintWriter out = resp.getWriter();
-    out.print((new Gson()).toJson(Datastore.dumpMsgs()));
+    //out.print((new Gson()).toJson(Datastore.dumpMsgs()));
     resp.setStatus(HttpServletResponse.SC_OK);
   }
 

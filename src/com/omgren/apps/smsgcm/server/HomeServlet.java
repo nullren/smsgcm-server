@@ -51,11 +51,15 @@ public class HomeServlet extends BaseServlet {
     if (status != null) {
       out.print(status);
     }
-    List<String> devices = Datastore.getDevices();
+    List<String> devices = Datastore.lookupUser(req).getDevices();
     if (devices.isEmpty()) {
       out.print("<h2>No devices registered!</h2>");
     } else {
       out.print("<h2>" + devices.size() + " device(s) registered!</h2>");
+      out.print("<h6>devices:</h6><ul>");
+      for(String d : devices)
+        out.print("<li>" + d + "</li>");
+      out.print("</ul>");
     }
 
     out.print("<pre>" + Utilities.getSSLClientDN(req) + "</pre>");

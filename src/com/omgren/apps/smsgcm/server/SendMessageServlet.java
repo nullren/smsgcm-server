@@ -26,11 +26,11 @@ public class SendMessageServlet extends BaseServlet {
     out.print("<body><form action=\"\" method=\"get\">");
 
     if( address != null && message != null && address.length() > 0 ){
-      Datastore.queueMsg(address, message);
+      //Datastore.queueMsg(address, message);
       out.print("sending \"" + message + "\" to " + address);
 
-      List<String> devices = Datastore.getDevices();
-      GCMNotify.notify(devices);
+      //List<String> devices = Datastore.getDevices();
+      //GCMNotify.notify(devices);
 
       out.print("<br />");
     }

@@ -36,7 +36,7 @@ public class UnregisterServlet extends BaseServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException {
     String regId = getParameter(req, PARAMETER_REG_ID);
-    Datastore.unregister(regId);
+    Datastore.lookupUser(req).unregister(regId);
     setSuccess(resp);
   }
 
