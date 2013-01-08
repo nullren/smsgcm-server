@@ -14,11 +14,11 @@
   <property name="tchome" location="/usr/share/tomcat7"/>
   <property name="path" value="/smsgcm"/>
   <property name="username" value="manager"/>
-  <property name="password" value="tomcat"/>
+  <property name="password" value="renningAWESOME"/>
   <!--<property name="url" value="https://awesome.omgren.com/manager/text"/>-->
   <property name="url" value="http://localhost:8080/manager/text"/>
 
-  <path id="catalina-ant-classpath">
+  <path id="catalina-ant.classpath">
     <fileset dir="${tchome}/lib">
       <include name="catalina-ant.jar"/>
       <include name="tomcat-coyote.jar"/>
@@ -49,8 +49,7 @@
   </target>
 
   <target name="compile" depends="init" description="Compile the Java classes.">
-    <javac destdir="${classes}" debug="true" srcdir="${src}" target="1.5"
-      includeantruntime="false">
+    <javac destdir="${classes}" debug="true" srcdir="${src}" includeantruntime="false">
       <classpath refid="compile.classpath"/>
     </javac>
   </target>
@@ -64,8 +63,11 @@
 
   <target name="dist" depends="war" description="Generate all artifacts."/>
 
-  <taskdef name="deploy" classname="org.apache.catalina.ant.DeployTask" classpathref="catalina-ant-classpath"/>
-  <taskdef name="undeploy" classname="org.apache.catalina.ant.UndeployTask" classpathref="catalina-ant-classpath"/>
+
+  <!-- tomcat deployment stuff -->
+
+  <taskdef name="deploy" classname="org.apache.catalina.ant.DeployTask" classpathref="catalina-ant.classpath"/>
+  <taskdef name="undeploy" classname="org.apache.catalina.ant.UndeployTask" classpathref="catalina-ant.classpath"/>
 
   <target name="deploy" depends="dist" description="Install to tomcat.">
     <deploy url="${url}" username="${username}" password="${password}" path="${path}" war="${war}"/>
