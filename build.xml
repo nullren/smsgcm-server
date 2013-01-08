@@ -75,5 +75,8 @@
     <undeploy url="${url}" username="${username}" password="${password}" path="${path}"/>
   </target>
 
+  <target name="refresh" description="Completely uninstalls, cleans, rebuilds, then installs to tomcat."
+          depends="clean,dist,undeploy,deploy" />
+
 </project>
 

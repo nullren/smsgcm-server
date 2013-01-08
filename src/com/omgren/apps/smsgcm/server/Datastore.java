@@ -21,7 +21,7 @@ public final class Datastore {
 
   public static DSUser lookupUser(String dn){
     synchronized(users){
-      for(Iterator<DSuser> it = users.iterator(); it.hasNext();){
+      for(Iterator<DSUser> it = users.iterator(); it.hasNext();){
         DSUser u = it.next();
         if(u.getDN().equals(dn))
           return u;
