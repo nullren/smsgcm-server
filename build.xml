@@ -1,19 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  - Copyright 2012 Google Inc.
-  -
-  - Licensed under the Apache License, Version 2.0 (the "License"); you may not
-  - use this file except in compliance with the License. You may obtain a copy
-  - of the License at
-  -
-  - http://www.apache.org/licenses/LICENSE-2.0
-  -
-  - Unless required by applicable law or agreed to in writing, software
-  - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-  - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-  - License for the specific language governing permissions and limitations
-  - under the License.
--->
 <project name="smsgcm-server" default="dist">
 
   <property name="src" location="src"/>
@@ -25,6 +10,25 @@
   <property name="web-src" value="WebContent"/>
   <property name="web-lib" value="${web-src}/WEB-INF/lib"/>
 
+  <!-- tomcat stuff -->
+  <property name="tchome" location="/usr/share/tomcat7"/>
+  <property name="path" value="/smsgcm"/>
+  <property name="username" value="manager"/>
+  <property name="password" value="tomcat"/>
+  <!--<property name="url" value="https://awesome.omgren.com/manager/text"/>-->
+  <property name="url" value="http://localhost:8080/manager/text"/>
+
+  <path id="catalina-ant-classpath">
+    <fileset dir="${tchome}/lib">
+      <include name="catalina-ant.jar"/>
+      <include name="tomcat-coyote.jar"/>
+      <include name="tomcat-util.jar"/>
+    </fileset>
+    <fileset dir="${tchome}/bin">
+      <include name="tomcat-juli.jar"/>
+    </fileset>
+  </path>
+
   <path id="compile.classpath">
     <fileset dir="${lib}">
       <include name="*.jar"/>
@@ -34,11 +38,8 @@
     </fileset>
   </path>
 
-  <target name="clean" description="Clean all artifacts except the dist files.">
+  <target name="clean" description="Clean up build and dist files.">
     <delete dir="${build}"/>
-  </target>
-
-  <target name="full-clean" depends="clean" description="Clean all artifacts including the dist files.">
     <delete dir="${dist}"/>
   </target>
 
@@ -62,6 +63,17 @@
   </target>
 
   <target name="dist" depends="war" description="Generate all artifacts."/>
+
+  <taskdef name="deploy" classname="org.apache.catalina.ant.DeployTask" classpathref="catalina-ant-classpath"/>
+  <taskdef name="undeploy" classname="org.apache.catalina.ant.UndeployTask" classpathref="catalina-ant-classpath"/>
+
+  <target name="deploy" depends="dist" description="Install to tomcat.">
+    <deploy url="${url}" username="${username}" password="${password}" path="${path}" war="${war}"/>
+  </target>
+
+  <target name="undeploy" description="Uninstall from tomcat.">
+    <undeploy url="${url}" username="${username}" password="${password}" path="${path}"/>
+  </target>
 
 </project>
 

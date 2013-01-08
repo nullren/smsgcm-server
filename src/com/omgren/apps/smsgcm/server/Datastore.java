@@ -2,6 +2,7 @@ package com.omgren.apps.smsgcm.server;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Iterator;
 import java.util.logging.Logger;
 
 import com.omgren.apps.smsgcm.common.SmsMessageDummy;
@@ -20,7 +21,8 @@ public final class Datastore {
 
   public static DSUser lookupUser(String dn){
     synchronized(users){
-      for(DSUser u : users){
+      for(Iterator<DSuser> it = users.iterator(); it.hasNext();){
+        DSUser u = it.next();
         if(u.getDN().equals(dn))
           return u;
       }
@@ -35,4 +37,11 @@ public final class Datastore {
     String dn = Utilities.getSSLClientDN(req);
     return lookupUser(dn);
   }
+
+  public static List<DSUser> getUsers(){
+    synchronized(users){
+      return new LinkedList<DSUser>(users);
+    }
+  }
+
 }

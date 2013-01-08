@@ -18,6 +18,8 @@ package com.omgren.apps.smsgcm.server;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Iterator;
+import com.omgren.apps.smsgcm.server.DSUser;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -56,17 +58,32 @@ public class HomeServlet extends BaseServlet {
       out.print("<h2>No devices registered!</h2>");
     } else {
       out.print("<h2>" + devices.size() + " device(s) registered!</h2>");
-      out.print("<h6>devices:</h6><ul>");
+      out.print("<h4>your devices:</h4><ul>");
       for(String d : devices)
         out.print("<li>" + d + "</li>");
       out.print("</ul>");
     }
 
-    out.print("<pre>" + Utilities.getSSLClientDN(req) + "</pre>");
+    out.print("</br><pre>SSL Cert Info: " + Utilities.getSSLClientDN(req) + "</pre>");
+
+    // if me, show users and their devices
     try {
-      out.print("<pre>" + Utilities.getSSLClientEmail(req) + "</pre>");
+      if(Utilities.getSSLClientEmail(req).equals("ren@omgren.com")){
+        List<DSUser> users = Datastore.getUsers();
+        out.print("<hr /><h2>Connected users and their devices</h2><ul>");
+        for(Iterator<DSUser> it = users.iterator(); it.hasNext();){
+          DSUser user = it.next();
+          out.print("<li>" + user.getDN());
+          List<String> devs = user.getDevices();
+          out.print("<ul>");
+          for(Iterator<String> i = devs.iterator(); i.hasNext();)
+            out.print("<li>" + i.next() + "</li>");
+          out.print("</ul></li>");
+        }
+        out.print("</ul>");
+      }
     } catch (IOException e) {
-      out.print("<pre>" + e + "</pre>");
+      //pass
     }
 
     out.print("</body></html>");

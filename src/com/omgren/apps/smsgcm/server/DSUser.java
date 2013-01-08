@@ -33,7 +33,8 @@ public class DSUser {
 
   public void updateRegistration(String oldId, String newId){
     synchronized(this.devices){
-      for(DSDevice d : this.devices){
+      for(Iterator<DSDevice> it = this.devices.iterator(); it.hasNext(); ){
+        DSDevice d = it.next();
         if(d.getRegId().equals(oldId))
           d.setRegId(newId);
       }
@@ -43,7 +44,8 @@ public class DSUser {
   public List<String> getDevices(){
     List<String> devs = new LinkedList<String>();
     synchronized(this.devices){
-      for(DSDevice d : this.devices){
+      for(Iterator<DSDevice> it = this.devices.iterator(); it.hasNext(); ){
+        DSDevice d = it.next();
         devs.add(d.getRegId());
       }
     }
