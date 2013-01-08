@@ -54,7 +54,11 @@ public class DSUser {
 
   public DSDevice getDevice(int x){
     synchronized(this.devices){
-      return this.devices.get(x);
+      try {
+        return this.devices.get(x);
+      } catch (IndexOutOfBoundsException e) {
+        return null;
+      }
     }
   }
 

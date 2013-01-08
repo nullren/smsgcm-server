@@ -26,15 +26,16 @@ public class SendMessageServlet extends BaseServlet {
     out.print("<body><form action=\"\" method=\"get\">");
 
     if( address != null && message != null && address.length() > 0 ){
-      try {
-        Datastore.lookupUser(req).getDevice(0).getQueued().put(address, message);
+      DSDevice phone = Datastore.lookupUser(req).getDevice(0);
+      if( phone != null ){
+        phone.getQueued().put(address, message);
         out.print("sending \"" + message + "\" to " + address);
 
         List<String> devices = Datastore.lookupUser(req).getDevices();
         GCMNotify.notify(req, devices);
 
         out.print("<br />");
-      } catch (IndexOutOfBoundsException e) {
+      } else {
         out.print("not connected to any devices.</br>");
       }
     }

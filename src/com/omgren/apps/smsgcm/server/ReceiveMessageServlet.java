@@ -27,25 +27,32 @@ public class ReceiveMessageServlet extends BaseServlet {
     msg.address = req.getParameter("address");
     msg.message = req.getParameter("message");
 
-    if( msg.address != null ){
-      Datastore.lookupUser(req).getDevice(0).getReceived().put(msg);
-      out.print("added: ");
-      out.print(msg.name + " (" + msg.address + "): " + msg.message);
-      out.print("<br/><br/>");
+    DSDevice phone = Datastore.lookupUser(req).getDevice(0);
+
+    if( phone != null ){
+      if( msg.address != null ){
+        phone.getReceived().put(msg);
+        out.print("added: ");
+        out.print(msg.name + " (" + msg.address + "): " + msg.message);
+        out.print("<br/><br/>");
+      }
+
+      out.print("have:<br/>");
+
+      List<SmsMessageDummy> msgs = phone.getReceived().get();
+      int counter = 0;
+      for (Iterator<SmsMessageDummy> it = msgs.iterator(); it.hasNext();) {
+        SmsMessageDummy m = it.next();
+        counter++;
+        out.print(m.name + " (" + m.address + "): " + m.message);
+        out.print("<br />");
+      }
+
+      out.print("total " + counter + " messages");
+
+    } else {
+      out.print("no devices connected.");
     }
-
-    out.print("have:<br/>");
-
-    List<SmsMessageDummy> msgs = Datastore.lookupUser(req).getDevice(0).getReceived().get();
-    int counter = 0;
-    for (Iterator<SmsMessageDummy> it = msgs.iterator(); it.hasNext();) {
-      SmsMessageDummy m = it.next();
-      counter++;
-      out.print(m.name + " (" + m.address + "): " + m.message);
-      out.print("<br />");
-    }
-
-    out.print("total " + counter + " messages");
 
     resp.setStatus(HttpServletResponse.SC_OK);
   }
