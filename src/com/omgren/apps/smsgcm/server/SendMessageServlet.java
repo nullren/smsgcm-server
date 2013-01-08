@@ -22,18 +22,23 @@ public class SendMessageServlet extends BaseServlet {
     String address = req.getParameter("address");
     String message = req.getParameter("message");
 
+    out.print("<html><head><title>send stuff</title></head>");
+    out.print("<body><form action=\"\" method=\"get\">");
+
     if( address != null && message != null && address.length() > 0 ){
       Datastore.queueMsg(address, message);
       out.print("sending \"" + message + "\" to " + address);
-      getServletContext().getRequestDispatcher("/sendAll").forward(req, resp);
-    }else{
-      out.print("<html><head><title>stuff</title></head>");
-      out.print("<body><form action=\"\" method=\"get\">");
-      out.print("<input type=\"text\" name=\"address\" />");
-      out.print("<input type=\"text\" name=\"message\" />");
-      out.print("<input type=\"submit\" name=\"submit\" />");
-      out.print("</form></body></html>");
+
+      List<String> devices = Datastore.getDevices();
+      GCMNotify.notify(devices);
+
+      out.print("<br />");
     }
+
+    out.print("<input type=\"text\" name=\"address\" />");
+    out.print("<input type=\"text\" name=\"message\" />");
+    out.print("<input type=\"submit\" name=\"submit\" />");
+    out.print("</form></body></html>");
 
     resp.setStatus(HttpServletResponse.SC_OK);
   }
