@@ -8,7 +8,6 @@ import com.omgren.apps.smsgcm.server.DSDevice;
 public class DSUser {
 
   private String dn;
-
   private List<DSDevice> devices;
 
   public DSUser(String dn) {
@@ -49,6 +48,12 @@ public class DSUser {
       }
     }
     return devs;
+  }
+
+  public DSDevice getDevice(int x){
+    synchronized(this.devices){
+      return this.devices.get(x);
+    }
   }
 
   public String getDN(){

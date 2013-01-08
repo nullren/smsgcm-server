@@ -18,6 +18,13 @@ public class DSMessages {
     }
   }
 
+  public void put(String address, String message){
+    SmsMessageDummy m = new SmsMessageDummy();
+    m.address = address;
+    m.message = message;
+    put(m);
+  }
+
   public List<SmsMessageDummy> dump(){
     synchronized (messages) {
       List<SmsMessageDummy> ret = new LinkedList<SmsMessageDummy>(messages);

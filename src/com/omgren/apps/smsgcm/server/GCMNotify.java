@@ -62,7 +62,7 @@ public class GCMNotify {
     logger.fine(status);
   }
 
-  private static void asyncSend(HttpServletRequest req, List<String> partialDevices) {
+  private static void asyncSend(final HttpServletRequest req, List<String> partialDevices) {
     // make a copy
     final List<String> devices = new ArrayList<String>(partialDevices);
     threadPool.execute(new Runnable() {
