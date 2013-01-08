@@ -22,11 +22,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import java.security.cert.X509Certificate;
-
-import javax.naming.ldap.LdapName;
-import javax.naming.ldap.Rdn;
-
 /**
  * Servlet that adds display number of devices and button to send a message.
  * <p>
@@ -63,20 +58,11 @@ public class HomeServlet extends BaseServlet {
       out.print("<h2>" + devices.size() + " device(s) registered!</h2>");
     }
 
-    Object certObj = req.getAttribute("javax.servlet.request.X509Certificate");
-    if( certObj != null ){
-      X509Certificate certs[] = (X509Certificate[]) certObj;
-      X509Certificate cert = certs[0];
-      out.print("<pre>" + cert.getSubjectDN().getName() + "</pre><br />");
-      String dn = cert.getSubjectDN().getName();
-      try {
-        LdapName ldapDN = new LdapName(dn);
-        out.print("<pre>");
-        for(Rdn rdn : ldapDN.getRdns()){
-          out.print(rdn.getType() + " = " + rdn.getValue() + "\n");
-        }
-        out.print("</pre>");
-      } catch(Exception e) {}
+    out.print("<pre>" + Utilities.getSSLClientDN(req) + "</pre>");
+    try {
+      out.print("<pre>" + Utilities.getSSLClientEmail(req) + "</pre>");
+    } catch (IOException e) {
+      out.print("<pre>" + e + "</pre>");
     }
 
     out.print("</body></html>");
