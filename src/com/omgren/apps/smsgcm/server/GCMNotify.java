@@ -13,6 +13,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpServletRequest;
 
 public class GCMNotify {
 
@@ -23,7 +24,7 @@ public class GCMNotify {
   private static final Executor threadPool = Executors.newFixedThreadPool(5);
   private static final Logger logger = Logger.getLogger(GCMNotify.class.getName());
 
-  public static void notify(List<String> devices) throws IOException {
+  public static void notify(HttpServletRequest req, List<String> devices) throws IOException {
     sender = new Sender(API_KEY);
     String status;
     if (devices.isEmpty()) {
@@ -49,7 +50,7 @@ public class GCMNotify {
           partialDevices.add(device);
           int partialSize = partialDevices.size();
           if (partialSize == MULTICAST_SIZE || counter == total) {
-            asyncSend(partialDevices);
+            asyncSend(req, partialDevices);
             partialDevices.clear();
             tasks++;
           }
@@ -61,7 +62,7 @@ public class GCMNotify {
     logger.fine(status);
   }
 
-  private static void asyncSend(List<String> partialDevices) {
+  private static void asyncSend(HttpServletRequest req, List<String> partialDevices) {
     // make a copy
     final List<String> devices = new ArrayList<String>(partialDevices);
     threadPool.execute(new Runnable() {
@@ -87,14 +88,14 @@ public class GCMNotify {
             if (canonicalRegId != null) {
               // same device has more than on registration id: update it
               logger.info("canonicalRegId " + canonicalRegId);
-              //Datastore.updateRegistration(regId, canonicalRegId);
+              Datastore.lookupUser(req).updateRegistration(regId, canonicalRegId);
             }
           } else {
             String error = result.getErrorCodeName();
             if (error.equals(Constants.ERROR_NOT_REGISTERED)) {
               // application has been removed from device - unregister it
               logger.info("Unregistered device: " + regId);
-              //Datastore.unregister(regId);
+              Datastore.lookupUser(req).unregister(regId);
             } else {
               logger.severe("Error sending message to " + regId + ": " + error);
             }
