@@ -44,7 +44,9 @@ public class MessageServlet extends BaseServlet {
       throws IOException {
     resp.setContentType("text/html");
     PrintWriter out = resp.getWriter();
-    out.print((new Gson()).toJson(Datastore.lookupUser(req).getDevice(0).getQueued().dump()));
+    DSDevice phone = Datastore.lookupUser(req).getDevice(0);
+    if( phone != null )
+      out.print((new Gson()).toJson(phone.getQueued().dump()));
     resp.setStatus(HttpServletResponse.SC_OK);
   }
 
