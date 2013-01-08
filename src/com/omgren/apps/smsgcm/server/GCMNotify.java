@@ -19,11 +19,11 @@ public class GCMNotify {
   private static final String API_KEY = "PUT_YOUR_API_KEY_HERE";
 
   private static final int MULTICAST_SIZE = 1000;
-  private Sender sender;
+  private static Sender sender;
   private static final Executor threadPool = Executors.newFixedThreadPool(5);
-  private static final Logger logger = Logger.getLogger(getClass().getName());
+  private static final Logger logger = Logger.getLogger(GCMNotify.class.getName());
 
-  public static void notify(List<String> devices){
+  public static void notify(List<String> devices) throws IOException {
     sender = new Sender(API_KEY);
     String status;
     if (devices.isEmpty()) {
@@ -61,7 +61,7 @@ public class GCMNotify {
     logger.fine(status);
   }
 
-  private void asyncSend(List<String> partialDevices) {
+  private static void asyncSend(List<String> partialDevices) {
     // make a copy
     final List<String> devices = new ArrayList<String>(partialDevices);
     threadPool.execute(new Runnable() {
