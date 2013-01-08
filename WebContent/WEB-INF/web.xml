@@ -20,12 +20,6 @@
   xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
   id="WebApp_ID" version="2.5">
 
-  <listener>
-    <listener-class>
-      com.omgren.apps.smsgcm.server.ApiKeyInitializer
-    </listener-class>
-  </listener>
-  
   <servlet>
     <servlet-name>RegisterServlet</servlet-name>
     <servlet-class>

@@ -24,6 +24,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.security.cert.X509Certificate;
 
+import javax.naming.ldap.LdapName;
+import javax.naming.ldap.Rdn;
+
 /**
  * Servlet that adds display number of devices and button to send a message.
  * <p>
@@ -64,7 +67,16 @@ public class HomeServlet extends BaseServlet {
     if( certObj != null ){
       X509Certificate certs[] = (X509Certificate[]) certObj;
       X509Certificate cert = certs[0];
-      out.print("<pre>" + cert.getSubjectDN().getName() + "</pre>");
+      out.print("<pre>" + cert.getSubjectDN().getName() + "</pre><br />");
+      String dn = cert.getSubjectDN().getName();
+      try {
+        LdapName ldapDN = new LdapName(dn);
+        out.print("<pre>");
+        for(Rdn rdn : ldapDN.getRdns()){
+          out.print(rdn.getType() + " = " + rdn.getValue() + "\n");
+        }
+        out.print("</pre>");
+      } catch(Exception e) {}
     }
 
     out.print("</body></html>");
