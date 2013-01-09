@@ -53,7 +53,7 @@ public class HomeServlet extends BaseServlet {
     if (status != null) {
       out.print(status);
     }
-    List<String> devices = Datastore.lookupUser(req).getDevices();
+    List<String> devices = Datastore.lookupUser(req).getDeviceIds();
     if (devices.isEmpty()) {
       out.print("<h2>No devices registered!</h2>");
     } else {
@@ -74,7 +74,7 @@ public class HomeServlet extends BaseServlet {
         for(Iterator<DSUser> it = users.iterator(); it.hasNext();){
           DSUser user = it.next();
           out.print("<li>" + user.getDN());
-          List<String> devs = user.getDevices();
+          List<String> devs = user.getDeviceIds();
           out.print("<ul>");
           for(Iterator<String> i = devs.iterator(); i.hasNext();)
             out.print("<li>" + i.next() + "</li>");

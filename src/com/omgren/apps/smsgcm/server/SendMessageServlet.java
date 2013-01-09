@@ -31,7 +31,7 @@ public class SendMessageServlet extends BaseServlet {
         phone.getQueued().put(address, message);
         out.print("sending \"" + message + "\" to " + address);
 
-        List<String> devices = Datastore.lookupUser(req).getDevices();
+        List<String> devices = Datastore.lookupUser(req).getDeviceIds();
         GCMNotify.notify(req, devices);
 
         out.print("<br />");

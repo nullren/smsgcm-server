@@ -41,7 +41,7 @@ public class DSUser {
     }
   }
 
-  public List<String> getDevices(){
+  public List<String> getDeviceIds(){
     List<String> devs = new LinkedList<String>();
     synchronized(this.devices){
       for(Iterator<DSDevice> it = this.devices.iterator(); it.hasNext(); ){
@@ -50,6 +50,12 @@ public class DSUser {
       }
     }
     return devs;
+  }
+
+  public List<DSDevice> getDevices(){
+    synchronized(this.devices){
+      return new LinkedList<DSDevice>(this.devices);
+    }
   }
 
   public DSDevice getDevice(int x){
