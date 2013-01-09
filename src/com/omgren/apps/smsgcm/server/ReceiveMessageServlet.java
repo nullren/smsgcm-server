@@ -31,23 +31,15 @@ public class ReceiveMessageServlet extends BaseServlet {
     if( phone != null ){
       if( msg.address != null ){
         phone.getReceived().put(msg);
-        out.print("added: ");
-        out.print(msg.name + " (" + msg.address + "): " + msg.message);
-        out.print("<br/><br/>");
       }
 
-      out.print("have:<br/>");
+      String dump = req.getParameter("dump");
 
-      List<SmsMessageDummy> msgs = phone.getReceived().get();
-      int counter = 0;
-      for (Iterator<SmsMessageDummy> it = msgs.iterator(); it.hasNext();) {
-        SmsMessageDummy m = it.next();
-        counter++;
-        out.print(m.name + " (" + m.address + "): " + m.message);
-        out.print("<br />");
+      if( dump != null ){
+        out.print((new Gson()).toJson(phone.getReceived().dump()));
+      } else {
+        out.print((new Gson()).toJson(phone.getReceived().get()));
       }
-
-      out.print("total " + counter + " messages");
 
     } else {
       out.print("no devices connected.");
