@@ -1,15 +1,14 @@
 package com.omgren.apps.smsgcm.server;
 
+import com.google.gson.Gson;
+import com.omgren.apps.smsgcm.common.SmsMessageDummy;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import java.util.Iterator;
-
-import javax.servlet.ServletException;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.omgren.apps.smsgcm.common.SmsMessageDummy;
+import javax.servlet.ServletException;
 
 @SuppressWarnings("serial")
 public class ReceiveMessageServlet extends BaseServlet {
