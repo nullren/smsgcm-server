@@ -25,6 +25,11 @@ public class ReceiveMessageServlet extends BaseServlet {
     msg.name = req.getParameter("name");
     msg.address = req.getParameter("address");
     msg.message = req.getParameter("message");
+    try {
+      msg.time = Long.valueOf(req.getParameter("time"));
+    } catch (NumberFormatException e){
+      msg.time = null;
+    }
 
     DSDevice phone = Datastore.lookupUser(req).getDevice(0);
 
