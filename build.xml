@@ -12,7 +12,7 @@
 
   <!-- tomcat stuff -->
   <property name="tchome" location="/usr/share/tomcat7"/>
-  <property name="path" value="/smsgcm"/>
+  <property name="path" value=""/>
   <property name="username" value="manager"/>
   <property name="password" value="renningAWESOME"/>
   <!--<property name="url" value="https://awesome.omgren.com/manager/text"/>-->
