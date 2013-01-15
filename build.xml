@@ -10,12 +10,11 @@
   <property name="web-src" value="WebContent"/>
   <property name="web-lib" value="${web-src}/WEB-INF/lib"/>
 
-  <!-- tomcat stuff -->
+  <!-- SET THESE VALUSE TO DEPLOY TO TOMCAT -->
   <property name="tchome" location="/usr/share/tomcat7"/>
   <property name="path" value=""/>
   <property name="username" value="manager"/>
   <property name="password" value="renningAWESOME"/>
-  <!--<property name="url" value="https://awesome.omgren.com/manager/text"/>-->
   <property name="url" value="http://localhost:8080/manager/text"/>
 
   <path id="catalina-ant.classpath">
