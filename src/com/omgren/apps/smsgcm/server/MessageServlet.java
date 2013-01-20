@@ -26,6 +26,7 @@ public class MessageServlet extends BaseServlet {
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws IOException {
     resp.setContentType("application/json");
+    resp.setCharacterEncoding("utf-8");
     PrintWriter out = resp.getWriter();
     DSDevice phone = Datastore.lookupUser(req).getDevice(0);
     if( phone != null )

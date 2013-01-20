@@ -19,6 +19,7 @@ public class ReceiveMessageServlet extends BaseServlet {
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws IOException, ServletException {
     resp.setContentType("application/json");
+    resp.setCharacterEncoding("utf-8");
     PrintWriter out = resp.getWriter();
 
     SmsMessageDummy msg = new SmsMessageDummy();
