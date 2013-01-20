@@ -25,7 +25,7 @@ public class MessageServlet extends BaseServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws IOException {
-    resp.setContentType("text/html");
+    resp.setContentType("application/json");
     PrintWriter out = resp.getWriter();
     DSDevice phone = Datastore.lookupUser(req).getDevice(0);
     if( phone != null )
