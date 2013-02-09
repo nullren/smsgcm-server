@@ -3,6 +3,7 @@ package com.omgren.apps.smsgcm.server;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.LinkedList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -29,12 +30,15 @@ public class SendMessageServlet extends BaseServlet {
     out.print("<body onload=\"document.forms[0]."+(page_reload?"message":"address")+".focus();\"><form action=\"\" method=\"get\">");
 
     if( page_reload ){
+      /* TODO: find the right phone */
       DSDevice phone = Datastore.lookupUser(req).getDevice(0);
       if( phone != null ){
         phone.queueMessage(address, message);
         out.print("sending \"" + message + "\" to " + address);
 
-        List<String> devices = Datastore.lookupUser(req).getDeviceIds();
+        List<String> devices = new LinkedList();
+        devices.add(phone.getDeviceId());
+
         GCMNotify.notify(req, devices);
 
         out.print("<br />");

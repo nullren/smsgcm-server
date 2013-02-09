@@ -26,6 +26,10 @@ public class DSDevice {
     return this.regId;
   }
 
+  public String getDeviceId(){
+    return getRegId();
+  }
+
   /**
    * these are messages queued up for the phone to download and then
    * send.
