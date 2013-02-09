@@ -36,16 +36,19 @@ public class ReceiveMessageServlet extends BaseServlet {
 
     if( phone != null ){
       if( msg.address != null ){
-        phone.getReceived().put(msg);
+        phone.queueReceivedMessage(msg);
       }
 
       String dump = req.getParameter("dump");
+      List<SmsMessageDummy> messages;
 
       if( dump != null ){
-        out.print((new Gson()).toJson(phone.getReceived().dump()));
+        messages = phone.dumpReceivedMessages();
       } else {
-        out.print((new Gson()).toJson(phone.getReceived().get()));
+        messages = phone.copyReceivedMessages();
       }
+
+      out.print((new Gson()).toJson(messages));
 
     } else {
       out.print("no devices connected.");

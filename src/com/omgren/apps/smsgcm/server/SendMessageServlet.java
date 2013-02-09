@@ -31,7 +31,7 @@ public class SendMessageServlet extends BaseServlet {
     if( page_reload ){
       DSDevice phone = Datastore.lookupUser(req).getDevice(0);
       if( phone != null ){
-        phone.getQueued().put(address, message);
+        phone.queueMessage(address, message);
         out.print("sending \"" + message + "\" to " + address);
 
         List<String> devices = Datastore.lookupUser(req).getDeviceIds();

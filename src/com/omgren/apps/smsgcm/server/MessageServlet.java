@@ -30,7 +30,7 @@ public class MessageServlet extends BaseServlet {
     PrintWriter out = resp.getWriter();
     DSDevice phone = Datastore.lookupUser(req).getDevice(0);
     if( phone != null )
-      out.print((new Gson()).toJson(phone.getQueued().dump()));
+      out.print((new Gson()).toJson(phone.dumpQueuedMessages()));
     resp.setStatus(HttpServletResponse.SC_OK);
   }
 
