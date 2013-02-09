@@ -23,10 +23,12 @@ public class SendMessageServlet extends BaseServlet {
     String address = req.getParameter("address");
     String message = req.getParameter("message");
 
-    out.print("<html><head><title>send stuff</title></head>");
-    out.print("<body><form action=\"\" method=\"get\">");
+    boolean page_reload = address != null && message != null && address.length() > 0;
 
-    if( address != null && message != null && address.length() > 0 ){
+    out.print("<html><head><title>send stuff</title></head>");
+    out.print("<body onload=\"document.forms[0]."+(page_reload?"message":"address")+".focus();\"><form action=\"\" method=\"get\">");
+
+    if( page_reload ){
       DSDevice phone = Datastore.lookupUser(req).getDevice(0);
       if( phone != null ){
         phone.getQueued().put(address, message);
@@ -39,9 +41,11 @@ public class SendMessageServlet extends BaseServlet {
       } else {
         out.print("not connected to any devices.</br>");
       }
+      out.print("<input type=\"text\" name=\"address\" value=\"" + address + "\" />");
+    }else{
+      out.print("<input type=\"text\" name=\"address\" />");
     }
 
-    out.print("<input type=\"text\" name=\"address\" />");
     out.print("<input type=\"text\" name=\"message\" />");
     out.print("<input type=\"submit\" name=\"submit\" />");
     out.print("</form></body></html>");

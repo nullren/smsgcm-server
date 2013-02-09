@@ -45,15 +45,16 @@ public class HomeServlet extends BaseServlet {
     resp.setCharacterEncoding("utf-8");
     PrintWriter out = resp.getWriter();
 
-    out.print("<html><body>");
+    out.print("<html>");
     out.print("<head>");
-    out.print("  <title>SMSGCM Connected Devices</title>");
-    out.print("  <link rel='icon' href='favicon.png'/>");
-    out.print("</head>");
+    out.print("<title>SMSGCM Connected Devices</title><link rel='icon' href='favicon.png'/>");
+    out.print("</head><body>");
+
     String status = (String) req.getAttribute(ATTRIBUTE_STATUS);
     if (status != null) {
       out.print(status);
     }
+
     List<String> devices = Datastore.lookupUser(req).getDeviceIds();
     if (devices.isEmpty()) {
       out.print("<h2>No devices registered!</h2>");
