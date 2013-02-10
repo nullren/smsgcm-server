@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletException;
 
 @SuppressWarnings("serial")
-public class ReceiveMessageServlet extends BaseServlet {
+public class DumpMessagesServlet extends BaseServlet {
 
   static final String ATTRIBUTE_STATUS = "status";
 
@@ -22,25 +22,13 @@ public class ReceiveMessageServlet extends BaseServlet {
     resp.setCharacterEncoding("utf-8");
     PrintWriter out = resp.getWriter();
 
-    SmsMessageDummy msg = new SmsMessageDummy();
-    msg.name = req.getParameter("name");
-    msg.address = req.getParameter("address");
-    msg.message = req.getParameter("message");
-    try {
-      msg.time = Long.valueOf(req.getParameter("time"));
-    } catch (NumberFormatException e){
-      msg.time = null;
-    }
-
     DSDevice phone = Datastore.lookupUser(req).getDevice(0);
 
     if( phone != null ){
-      if( msg.address != null ){
-        phone.queueReceivedMessage(msg);
-      }
-      out.print("OK");
+      List<SmsMessageDummy> messages = phone.dumpReceivedMessages();
+      out.print((new Gson()).toJson(messages));
     } else {
-      out.print("no devices connected");
+      out.print("no devices connected.");
     }
 
     resp.setStatus(HttpServletResponse.SC_OK);

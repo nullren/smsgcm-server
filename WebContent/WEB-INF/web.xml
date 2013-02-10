@@ -85,4 +85,30 @@
     <url-pattern>/receiveMessage</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>QueuedMessagesServlet</servlet-name>
+    <servlet-class>
+      com.omgren.apps.smsgcm.server.QueuedMessagesServlet
+    </servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>QueuedMessagesServlet</servlet-name>
+    <url-pattern>/queuedMessages</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>DumpMessagesServlet</servlet-name>
+    <servlet-class>
+      com.omgren.apps.smsgcm.server.DumpMessagesServlet
+    </servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>DumpMessagesServlet</servlet-name>
+    <url-pattern>/dumpMessages</url-pattern>
+  </servlet-mapping>
+
 </web-app>
