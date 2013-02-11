@@ -61,8 +61,14 @@ public class HomeServlet extends BaseServlet {
     } else {
       out.print("<h2>" + devices.size() + " device(s) registered!</h2>");
       out.print("<h4>your devices:</h4><ul>");
-      for(String d : devices)
-        out.print("<li>" + d + "</li>");
+      for(String d : devices){
+        DSDevice device = Datastore.lookupUser(req).getDeviceById(d);
+        String nickname = device.getNickname();
+        out.print("<li>");
+        out.print("<span>" + nickname + "</span> ");
+        out.print("<a href=\"/unregister?regId=" + d +"\">unregister</a>");
+        out.print("</li>");
+      }
       out.print("</ul>");
     }
 
