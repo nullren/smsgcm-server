@@ -25,7 +25,15 @@ public class QueuedMessagesServlet extends BaseServlet {
     DSDevice phone = Datastore.lookupUser(req).getDevice(0);
 
     if( phone != null ){
-      List<SmsMessageDummy> messages = phone.copyReceivedMessages();
+      String dump = req.getParameter("dump");
+      List<SmsMessageDummy> messages;
+
+      if( dump != null ){
+        messages = phone.dumpReceivedMessages();
+      } else {
+        messages = phone.copyReceivedMessages();
+      }
+
       out.print((new Gson()).toJson(messages));
     } else {
       out.print("no devices connected.");
