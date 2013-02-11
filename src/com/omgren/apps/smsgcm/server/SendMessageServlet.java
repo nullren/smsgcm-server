@@ -48,7 +48,7 @@ public class SendMessageServlet extends BaseServlet {
       if( dump != null )
         url += "?dump";
 
-      getServletContext().getRequestDispatcher(url).include(req, resp);
+      getServletContext().getRequestDispatcher(url).include(req, resp);
 
     }else{
 

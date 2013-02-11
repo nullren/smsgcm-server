@@ -61,8 +61,9 @@ public class DSUser {
   public DSDevice getDeviceById(String regId){
     synchronized(this.devices){
       for(Iterator<DSDevice> it = this.devices.iterator(); it.hasNext(); ){
-        if(it.next().getRegId().equals(regId))
-          return it;
+        DSDevice d = it.next();
+        if(d.getRegId().equals(regId))
+          return d;
       }
       return null;
     }
