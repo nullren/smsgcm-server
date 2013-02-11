@@ -28,16 +28,20 @@ public class DSDevice {
   private DSMessages queued;
   private DSMessages received;
 
-  public DSDevice(String regId) {
-    setRegID(regId);
-
+  private void initialize_messages(){
     this.queued = new DSMessages();
     this.received = new DSMessages();
   }
 
+  public DSDevice(String regId) {
+    setRegId(regId);
+    initialize_messages();
+  }
+
   public DSDevice(String regId, String nickname) {
-    DSDevice(regId);
+    setRegId(regId);
     setNickname(nickname);
+    initialize_messages();
   }
 
   public String getDeviceId(){
