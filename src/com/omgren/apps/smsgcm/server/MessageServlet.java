@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
  * main page of the demo app.
  */
 @SuppressWarnings("serial")
-public class MessageServlet extends BaseServlet {
+public class QueuedMessageServlet extends BaseServlet {
 
   static final String ATTRIBUTE_STATUS = "status";
 
