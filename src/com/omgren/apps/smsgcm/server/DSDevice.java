@@ -7,15 +7,21 @@ import java.util.List;
 public class DSDevice {
 
   private String regId;
+  private String nickname;
 
   private DSMessages queued;
   private DSMessages received;
 
   public DSDevice(String regId) {
-    this.regId = regId;
+    setRegID(regId);
 
     this.queued = new DSMessages();
     this.received = new DSMessages();
+  }
+
+  public DSDevice(String regId, String nickname) {
+    DSDevice(regId);
+    setNickname(nickname);
   }
 
   public void setRegId(String newId){
@@ -24,6 +30,14 @@ public class DSDevice {
 
   public String getRegId(){
     return this.regId;
+  }
+
+  public void setNickname(String newNick){
+    this.nickname = newNick;
+  }
+
+  public String getNickname(){
+    return this.nickname;
   }
 
   public String getDeviceId(){
