@@ -22,6 +22,12 @@ public class DSUser {
     }
   }
 
+  public void register(String regId, String nickname){
+    synchronized(this.devices){
+      this.devices.add(new DSDevice(regId, nickname));
+    }
+  }
+
   public void unregister(String regId){
     synchronized(this.devices){
       for(Iterator<DSDevice> it = this.devices.iterator(); it.hasNext(); ){

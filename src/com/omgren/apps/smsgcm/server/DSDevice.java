@@ -9,21 +9,6 @@ public class DSDevice {
   private String regId;
   private String nickname;
 
-  private DSMessages queued;
-  private DSMessages received;
-
-  public DSDevice(String regId) {
-    setRegID(regId);
-
-    this.queued = new DSMessages();
-    this.received = new DSMessages();
-  }
-
-  public DSDevice(String regId, String nickname) {
-    DSDevice(regId);
-    setNickname(nickname);
-  }
-
   public void setRegId(String newId){
     this.regId = newId;
   }
@@ -38,6 +23,21 @@ public class DSDevice {
 
   public String getNickname(){
     return this.nickname;
+  }
+
+  private DSMessages queued;
+  private DSMessages received;
+
+  public DSDevice(String regId) {
+    setRegID(regId);
+
+    this.queued = new DSMessages();
+    this.received = new DSMessages();
+  }
+
+  public DSDevice(String regId, String nickname) {
+    DSDevice(regId);
+    setNickname(nickname);
   }
 
   public String getDeviceId(){
