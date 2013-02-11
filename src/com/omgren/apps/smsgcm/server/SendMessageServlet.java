@@ -21,6 +21,7 @@ public class SendMessageServlet extends BaseServlet {
     String address = req.getParameter("address");
     String message = req.getParameter("message");
     String dump = req.getParameter("dump");
+    String list = req.getParameter("list");
 
     boolean page_reload = address != null && message != null && address.length() > 0;
 
@@ -60,10 +61,18 @@ public class SendMessageServlet extends BaseServlet {
 
     GCMNotify.notify(req, devices);
 
-    String url = "/received";
+    /* list or dump set, forward request to /received */
+    if( list != null || dump != null ){
+      String url = "/received";
+      resp.setContentType("application/json");
+      getServletContext().getRequestDispatcher(url).include(req, resp);
+      resp.setStatus(HttpServletResponse.SC_OK);
+      return;
+    }
 
-    resp.setContentType("application/json");
-    getServletContext().getRequestDispatcher(url).include(req, resp);
+    /* say okay if message sent successfully */
+    resp.setContentType("text/plain");
+    out.print("OK");
     resp.setStatus(HttpServletResponse.SC_OK);
   }
 
