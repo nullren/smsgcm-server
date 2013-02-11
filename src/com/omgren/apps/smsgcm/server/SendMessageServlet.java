@@ -34,6 +34,7 @@ public class SendMessageServlet extends BaseServlet {
       out.print("<body onload=\"document.forms[0].address.focus();\"><form action=\"\" method=\"get\">");
       out.print("<input type=\"text\" name=\"address\" />");
       out.print("<input type=\"text\" name=\"message\" />");
+      out.print("<input type=\"hidden\" name=\"list\" value=\"1\" />");
       out.print("<input type=\"submit\" name=\"submit\" />");
       out.print("</form></body></html>");
       resp.setStatus(HttpServletResponse.SC_OK);
@@ -60,10 +61,6 @@ public class SendMessageServlet extends BaseServlet {
     GCMNotify.notify(req, devices);
 
     String url = "/received";
-    if( dump != null )
-      url += "?dump";
-    else
-      url += "?list";
 
     resp.setContentType("application/json");
     getServletContext().getRequestDispatcher(url).include(req, resp);
