@@ -42,7 +42,7 @@ public class ReceivedMessageServlet extends BaseServlet {
         messages = phone.copyReceivedMessages();
       }
 
-      out.print((new Gson()).toJson(messages);
+      out.print((new Gson()).toJson(messages));
       resp.setStatus(HttpServletResponse.SC_OK);
       return;
     }
