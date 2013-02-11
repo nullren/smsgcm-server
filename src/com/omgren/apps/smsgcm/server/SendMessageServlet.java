@@ -17,42 +17,50 @@ public class SendMessageServlet extends BaseServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws IOException, ServletException {
-    resp.setContentType("text/html");
-    resp.setCharacterEncoding("utf-8");
-    PrintWriter out = resp.getWriter();
-
     String address = req.getParameter("address");
     String message = req.getParameter("message");
+    String dump = req.getParameter("dump");
 
     boolean page_reload = address != null && message != null && address.length() > 0;
 
-    out.print("<html><head><title>send stuff</title></head>");
-    out.print("<body onload=\"document.forms[0]."+(page_reload?"message":"address")+".focus();\"><form action=\"\" method=\"get\">");
+    resp.setCharacterEncoding("utf-8");
+    PrintWriter out = resp.getWriter();
 
     if( page_reload ){
+      resp.setContentType("application/json");
+
       /* TODO: find the right phone */
       DSDevice phone = Datastore.lookupUser(req).getDevice(0);
       if( phone != null ){
         phone.queueMessage(address, message);
-        out.print("sending \"" + message + "\" to " + address);
 
         List<String> devices = new LinkedList();
         devices.add(phone.getDeviceId());
 
         GCMNotify.notify(req, devices);
 
-        out.print("<br />");
       } else {
-        out.print("not connected to any devices.</br>");
+          out.print("not connected to any devices.</br>");
       }
-      out.print("<input type=\"text\" name=\"address\" value=\"" + address + "\" />");
-    }else{
-      out.print("<input type=\"text\" name=\"address\" />");
-    }
 
-    out.print("<input type=\"text\" name=\"message\" />");
-    out.print("<input type=\"submit\" name=\"submit\" />");
-    out.print("</form></body></html>");
+      String url = "/queuedMessages";
+
+      if( dump != null )
+        url += "?dump";
+
+      getServletContext().getRequestDispatcher(url).include(req, resp);
+
+    }else{
+
+      resp.setContentType("text/html");
+      out.print("<html><head><title>send stuff</title></head>");
+      out.print("<body onload=\"document.forms[0].address.focus();\"><form action=\"\" method=\"get\">");
+      out.print("<input type=\"text\" name=\"address\" />");
+      out.print("<input type=\"text\" name=\"message\" />");
+      out.print("<input type=\"submit\" name=\"submit\" />");
+      out.print("</form></body></html>");
+
+    }
 
     resp.setStatus(HttpServletResponse.SC_OK);
   }
