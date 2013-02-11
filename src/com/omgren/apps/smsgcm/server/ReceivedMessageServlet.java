@@ -17,10 +17,35 @@ public class ReceivedMessageServlet extends BaseServlet {
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-      throws IOException, ServletException {
+      throws IOException, ServletException
+  {
     resp.setContentType("application/json");
     resp.setCharacterEncoding("utf-8");
     PrintWriter out = resp.getWriter();
+
+    DSDevice phone = Datastore.lookupUser(req).getDevice(0);
+    if( phone == null ){
+      out.print("no devices connected");
+      resp.setStatus(HttpServletResponse.SC_OK);
+      return;
+    }
+
+    String dump = req.getParameter("dump");
+    String list = req.getParameter("list");
+
+    List<SmsMessageDummy> messages;
+
+    if( list != null || dump != null ){
+      if( dump != null ){
+        messages = phone.dumpReceivedMessages();
+      } else {
+        messages = phone.copyReceivedMessages();
+      }
+
+      out.print((new Gson()).toJson(messages);
+      resp.setStatus(HttpServletResponse.SC_OK);
+      return;
+    }
 
     SmsMessageDummy msg = new SmsMessageDummy();
     msg.name = req.getParameter("name");
@@ -32,21 +57,14 @@ public class ReceivedMessageServlet extends BaseServlet {
       msg.time = null;
     }
 
-    DSDevice phone = Datastore.lookupUser(req).getDevice(0);
-
-    if( phone != null ){
-      if( msg.address != null ){
-        phone.queueReceivedMessage(msg);
-        out.print("OK");
-        resp.setStatus(HttpServletResponse.SC_OK);
-      } else {
-        resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-      }
-    } else {
-      out.print("no devices connected");
+    if( msg.address != null ){
+      phone.queueReceivedMessage(msg);
+      out.print("OK");
       resp.setStatus(HttpServletResponse.SC_OK);
+      return;
     }
 
+    resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
   }
 
   @Override
