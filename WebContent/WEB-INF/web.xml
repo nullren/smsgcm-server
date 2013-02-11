@@ -47,9 +47,9 @@
   </servlet-mapping>
 
   <servlet>
-    <servlet-name>MessageServlet</servlet-name>
+    <servlet-name>QueuedMessageServlet</servlet-name>
     <servlet-class>
-      com.omgren.apps.smsgcm.server.MessageServlet
+      com.omgren.apps.smsgcm.server.QueuedMessageServlet
     </servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
