@@ -34,12 +34,19 @@ import com.omgren.apps.smsgcm.server.DSUser;
 public class RegisterServlet extends BaseServlet {
 
   private static final String PARAMETER_REG_ID = "regId";
+  private static final String PARAMETER_NICKNAME = "nickname";
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException {
     String regId = getParameter(req, PARAMETER_REG_ID);
-    Datastore.lookupUser(req).register(regId);
+    String nickname = getParameter(req, PARAMETER_NICKNAME);
+
+    if( nickname == null || nickname.equals("unnamed") ){
+      nickname = nickname.substring(0,10);
+    }
+
+    Datastore.lookupUser(req).register(regId, nickname);
     setSuccess(resp);
   }
 
