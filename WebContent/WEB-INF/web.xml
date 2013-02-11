@@ -55,8 +55,8 @@
   </servlet>
 
   <servlet-mapping>
-    <servlet-name>MessageServlet</servlet-name>
-    <url-pattern>/messages</url-pattern>
+    <servlet-name>QueuedMessageServlet</servlet-name>
+    <url-pattern>/queued</url-pattern>
   </servlet-mapping>
 
   <servlet>
@@ -84,18 +84,4 @@
     <servlet-name>ReceivedMessageServlet</servlet-name>
     <url-pattern>/received</url-pattern>
   </servlet-mapping>
-
-  <servlet>
-    <servlet-name>QueuedMessagesServlet</servlet-name>
-    <servlet-class>
-      com.omgren.apps.smsgcm.server.QueuedMessagesServlet
-    </servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>QueuedMessagesServlet</servlet-name>
-    <url-pattern>/queued</url-pattern>
-  </servlet-mapping>
-
 </web-app>
