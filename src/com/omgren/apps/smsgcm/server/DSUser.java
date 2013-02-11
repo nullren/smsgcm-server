@@ -58,6 +58,17 @@ public class DSUser {
     }
   }
 
+  public DSDevice getDeviceByNickname(String nickname){
+    synchronized(this.devices){
+      for(Iterator<DSDevice> it = this.devices.iterator(); it.hasNext(); ){
+        DSDevice d = it.next();
+        if(d.getNickname().equals(nickname))
+          return d;
+      }
+      return null;
+    }
+  }
+
   public DSDevice getDeviceById(String regId){
     synchronized(this.devices){
       for(Iterator<DSDevice> it = this.devices.iterator(); it.hasNext(); ){
