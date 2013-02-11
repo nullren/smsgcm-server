@@ -37,13 +37,16 @@ public class ReceiveMessageServlet extends BaseServlet {
     if( phone != null ){
       if( msg.address != null ){
         phone.queueReceivedMessage(msg);
+        out.print("OK");
+        resp.setStatus(HttpServletResponse.SC_OK);
+      } else {
+        resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
       }
-      out.print("OK");
     } else {
       out.print("no devices connected");
+      resp.setStatus(HttpServletResponse.SC_OK);
     }
 
-    resp.setStatus(HttpServletResponse.SC_OK);
   }
 
   @Override
