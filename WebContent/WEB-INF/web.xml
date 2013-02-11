@@ -69,20 +69,20 @@
 
   <servlet-mapping>
     <servlet-name>SendMessageServlet</servlet-name>
-    <url-pattern>/sendMessage</url-pattern>
+    <url-pattern>/send</url-pattern>
   </servlet-mapping>
 
   <servlet>
-    <servlet-name>ReceiveMessageServlet</servlet-name>
+    <servlet-name>ReceivedMessageServlet</servlet-name>
     <servlet-class>
-      com.omgren.apps.smsgcm.server.ReceiveMessageServlet
+      com.omgren.apps.smsgcm.server.ReceivedMessageServlet
     </servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
 
   <servlet-mapping>
-    <servlet-name>ReceiveMessageServlet</servlet-name>
-    <url-pattern>/receiveMessage</url-pattern>
+    <servlet-name>ReceivedMessageServlet</servlet-name>
+    <url-pattern>/received</url-pattern>
   </servlet-mapping>
 
   <servlet>
@@ -95,7 +95,7 @@
 
   <servlet-mapping>
     <servlet-name>QueuedMessagesServlet</servlet-name>
-    <url-pattern>/queuedMessages</url-pattern>
+    <url-pattern>/queued</url-pattern>
   </servlet-mapping>
 
 </web-app>

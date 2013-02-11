@@ -43,7 +43,7 @@ public class SendMessageServlet extends BaseServlet {
           out.print("not connected to any devices.</br>");
       }
 
-      String url = "/queuedMessages";
+      String url = "/queued";
 
       if( dump != null )
         url += "?dump";
