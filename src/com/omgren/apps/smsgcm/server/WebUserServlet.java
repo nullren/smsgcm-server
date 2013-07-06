@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletException;
 
 @SuppressWarnings("serial")
-public class ReceivedMessageServlet extends BaseServlet {
+public class WebUserServlet extends BaseServlet {
 
   static final String ATTRIBUTE_STATUS = "status";
 
