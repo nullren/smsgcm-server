@@ -29,6 +29,7 @@ public class WebUserServlet extends BaseServlet {
     boolean page_reload = address != null && message != null && address.length() > 0;
 
     out.print("<html><head><title>send stuff</title></head>");
+    out.print("<meta http-equiv=\"refresh\" content=\"5;url=https://smsgcm.omgren.com/html\" />");
     out.print("<body onload=\"document.forms[0].address.focus();\">");
 
     DSDevice phone = Datastore.lookupUser(req).getDevice(0);
@@ -42,7 +43,7 @@ public class WebUserServlet extends BaseServlet {
      * print the messages we have and make it pretty.
      */
 
-    messages = phone.copyReceivedMessages();
+    List<SmsMessageDummy> messages = phone.copyReceivedMessages();
 
     out.print("<div id=\"messages\">");
     for(Iterator<SmsMessageDummy> it = messages.iterator(); it.hasNext(); ){
