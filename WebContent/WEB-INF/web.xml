@@ -84,4 +84,17 @@
     <servlet-name>ReceivedMessageServlet</servlet-name>
     <url-pattern>/received</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+    <servlet-name>WebUserServlet</servlet-name>
+    <servlet-class>
+      com.omgren.apps.smsgcm.server.WebUserServlet
+    </servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>WebUserServlet</servlet-name>
+    <url-pattern>/html</url-pattern>
+  </servlet-mapping>
 </web-app>
