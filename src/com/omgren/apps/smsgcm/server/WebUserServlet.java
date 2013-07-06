@@ -28,6 +28,9 @@ public class ReceivedMessageServlet extends BaseServlet {
 
     boolean page_reload = address != null && message != null && address.length() > 0;
 
+    out.print("<html><head><title>send stuff</title></head>");
+    out.print("<body onload=\"document.forms[0].address.focus();\">");
+
     DSDevice phone = Datastore.lookupUser(req).getDevice(0);
     if( phone == null ){
       out.print("no devices connected");
@@ -41,14 +44,28 @@ public class ReceivedMessageServlet extends BaseServlet {
 
     messages = phone.copyReceivedMessages();
 
+    out.print("<div id=\"messages\">");
+    for(Iterator<SmsMessageDummy> it = messages.iterator(); it.hasNext(); ){
+      SmsMessageDummy m = it.next();
+      //m.message;
+      //m.name;
+      //m.address;
+      //m.time;
+
+      out.print("<div class=\"message\"><span class=\"time\">" + m.time + "</span><span class=\"name\">" + m.name + "</span><span class=\"address\">" + m.address + "</span><span class=\"body\">" + m.message + "</span></div>");
+    }
+    out.print("</div>");
+
     /* print a form and be nice */
-    out.print("<html><head><title>send stuff</title></head>");
-    out.print("<body onload=\"document.forms[0].address.focus();\"><form action=\"\" method=\"get\">");
+    out.print("<div id=\"send\">");
+    out.print("<form action=\"\" method=\"get\">");
     out.print("<input type=\"text\" name=\"address\" />");
     out.print("<input type=\"text\" name=\"message\" />");
     out.print("<input type=\"hidden\" name=\"list\" value=\"1\" />");
     out.print("<input type=\"submit\" name=\"submit\" />");
-    out.print("</form></body></html>");
+    out.print("</form>");
+    out.print("</div>");
+    out.print("</body></html>");
 
     if(!page_reload){
       resp.setStatus(HttpServletResponse.SC_OK);
